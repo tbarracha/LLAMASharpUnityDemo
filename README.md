@@ -33,9 +33,9 @@ Additionally this project uses the following packages:
 - Install [UniTask](https://github.com/Cysharp/UniTask) and [NuGetForUnity](https://github.com/GlitchEnzo/NuGetForUnity) via PackageManager.
 - Install LLAMASharp via NuGetForUnity.
 - Manually download one of the LLAMASharp.Backend.xx NuGet packages  
-  - [CPU](https://www.nuget.org/packages/LLamaSharp.Backend.Cpu)
-  - [CUDA 11](https://www.nuget.org/packages/LLamaSharp.Backend.Cuda11)
-  - [CUDA 12](https://www.nuget.org/packages/LLamaSharp.Backend.Cuda12)
+  - [CPU](https://www.nuget.org/packages/LLamaSharp.Backend.Cpu/0.10.0)
+  - [CUDA 11](https://www.nuget.org/packages/LLamaSharp.Backend.Cuda11/0.10.0)
+  - [CUDA 12](https://www.nuget.org/packages/LLamaSharp.Backend.Cuda12/0.10.0)
 - Unpack using ZIP, move `runtimes/<your runtime>/libllama.dll` to your Unity project Assets.
   (Note: dll must be called `libllama.dll` to be found. If it's named `llama.dll` - rename it when adding to the Unity project.)
 - Move the model to the StreamingAssets folder

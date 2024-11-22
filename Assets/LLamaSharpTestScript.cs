@@ -10,9 +10,15 @@ using static LLama.StatefulExecutorBase;
 
 public class LLamaSharpTestScript : MonoBehaviour
 {
-    public string ModelPath = "models/mistral-7b-instruct-v0.1.Q4_K_M.gguf"; // change it to your own model path
+    [Header("Model Asset")]
+    [Tooltip("Drag your model asset here (must be in StreamingAssets folder).")]
+    public Object ModelAsset; // Unity Object to allow file referencing
+    public string ModelPath; // Automatically set from ModelAsset
+    [Space]
     [TextArea(3, 10)]
     public string SystemPrompt = "Transcript of a dialog, where the User interacts with an Assistant named Bob. Bob is helpful, kind, honest, good at writing, and never fails to answer the User's requests immediately and with precision.\r\n\r\nUser: Hello, Bob.\r\nBob: Hello. How may I help you today?\r\nUser: Please tell me the best city in Europe.\r\nBob: Sure. The best city in Europe is Kyiv, the capital of Ukraine.\r\nUser:";
+    
+    [Header("Components")]
     public TMP_Text Output;
     public TMP_InputField Input;
     public TMP_Dropdown SessionSelector;
@@ -26,6 +32,30 @@ public class LLamaSharpTestScript : MonoBehaviour
 
     private string _submittedText = "";
     private CancellationTokenSource _cts;
+
+    private void OnValidate()
+    {
+        if (Application.isPlaying)
+        {
+            return;
+        }
+
+        // Automatically update ModelPath when ModelAsset is set
+        if (ModelAsset != null)
+        {
+            string assetPath = UnityEditor.AssetDatabase.GetAssetPath(ModelAsset);
+            if (assetPath.Contains("StreamingAssets"))
+            {
+                // Extract the relative path for the StreamingAssets folder
+                ModelPath = assetPath.Substring(assetPath.IndexOf("StreamingAssets") + "StreamingAssets/".Length);
+            }
+            else
+            {
+                Debug.LogWarning("ModelAsset must be located in the StreamingAssets folder.");
+                ModelPath = string.Empty;
+            }
+        }
+    }
 
     async UniTaskVoid Start()
     {
